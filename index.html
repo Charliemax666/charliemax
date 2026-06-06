@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>辐射2077：废土之战 - 定制桌游</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.6; color: #333; background: #f5f3f0; }
+html { scroll-behavior: smooth; }
+
+nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(45, 35, 30, 0.95); backdrop-filter: blur(10px); padding: 12px 0; border-bottom: 2px solid #8b3a2a; }
+nav ul { list-style: none; display: flex; justify-content: center; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 20px; flex-wrap: wrap; }
+nav a { color: #c4a882; text-decoration: none; font-size: 15px; font-weight: 500; transition: color 0.3s; letter-spacing: 1px; }
+nav a:hover { color: #e8dcc8; }
+
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding: 100px 20px 60px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('images/hero.jpg') center/cover; opacity: 0.35; }
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
+.hero h1 { font-size: 52px; font-weight: 900; color: #fff; letter-spacing: 8px; margin-bottom: 20px; text-shadow: 2px 2px 20px rgba(0,0,0,0.8); }
+.hero .subtitle { font-size: 22px; color: #c4a882; margin-bottom: 30px; letter-spacing: 4px; font-weight: 400; }
+.hero .tagline { font-size: 16px; color: #b0a090; max-width: 600px; margin: 0 auto 40px; line-height: 1.8; }
+.hero .cta { display: inline-block; padding: 16px 48px; background: #8b3a2a; color: #fff; font-size: 16px; border-radius: 4px; text-decoration: none; transition: all 0.3s; border: 2px solid #8b3a2a; letter-spacing: 2px; font-weight: 600; }
+.hero .cta:hover { background: transparent; color: #c4a882; border-color: #c4a882; }
+
+section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+.section-title { font-size: 36px; font-weight: 700; color: #3d3028; text-align: center; margin-bottom: 50px; position: relative; padding-bottom: 20px; }
+.section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: #8b3a2a; }
+.section-subtitle { text-align: center; color: #7a6a5a; font-size: 16px; max-width: 700px; margin: -30px auto 40px; line-height: 1.8; }
+
+#about { background: #fff; }
+.about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+.about-card { background: #f8f5f0; padding: 30px; border-radius: 8px; border-left: 4px solid #8b3a2a; transition: transform 0.3s; }
+.about-card:hover { transform: translateY(-5px); }
+.about-card h3 { font-size: 20px; color: #5c4a3d; margin-bottom: 12px; font-weight: 600; }
+.about-card p { color: #7a6a5a; font-size: 14px; line-height: 1.7; }
+
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+.gallery-item { border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+.gallery-item:hover { transform: scale(1.02); }
+.gallery-item img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.gallery-item .caption { padding: 15px; font-size: 14px; color: #5c4a3d; font-weight: 500; text-align: center; }
+
+.char-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px; }
+.char-card { width: 180px; text-align: center; background: #fff; border-radius: 8px; overflow: hidden; padding-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+.char-card:hover { transform: translateY(-5px); }
+.char-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+.char-card .name { font-size: 15px; font-weight: 600; color: #5c4a3d; margin-top: 10px; }
+.char-card .role { font-size: 12px; color: #7a6a5a; margin-top: 4px; }
+
+#process { background: #fff; }
+.process-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
+.process-step { width: 200px; text-align: center; position: relative; }
+.process-step .num { width: 60px; height: 60px; border-radius: 50%; background: #8b3a2a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 15px; }
+.process-step h3 { font-size: 18px; color: #5c4a3d; margin-bottom: 8px; }
+.process-step p { font-size: 13px; color: #7a6a5a; line-height: 1.6; }
+
+.pricing-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
+.pricing-card { width: 320px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: transform 0.3s; position: relative; }
+.pricing-card:hover { transform: translateY(-8px); }
+.pricing-card.featured { border: 3px solid #8b3a2a; transform: scale(1.05); }
+.pricing-header { padding: 30px; text-align: center; color: #fff; background: linear-gradient(135deg, #5c4a3d, #3d3028); }
+.pricing-card.featured .pricing-header { background: linear-gradient(135deg, #8b3a2a, #5c1a1a); }
+.pricing-header h3 { font-size: 22px; margin-bottom: 10px; }
+.pricing-header .price { font-size: 36px; font-weight: 700; letter-spacing: 2px; }
+.pricing-header .price span { font-size: 16px; font-weight: 400; }
+.pricing-body { padding: 30px; list-style: none; }
+.pricing-body li { padding: 12px 0; border-bottom: 1px solid #eee; font-size: 14px; color: #5c4a3d; display: flex; align-items: center; }
+.pricing-body li::before { content: '✓'; color: #8b3a2a; margin-right: 10px; font-weight: bold; }
+.pricing-cta { display: block; margin: 0 30px 30px; padding: 14px; background: #8b3a2a; color: #fff; text-align: center; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+.pricing-cta:hover { background: #6b2d1f; }
+
+#contact { background: #2d231e; color: #c4a882; text-align: center; }
+#contact .section-title { color: #e8dcc8; }
+#contact .section-title::after { background: #c4a882; }
+.contact-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 40px; }
+.contact-item { font-size: 16px; line-height: 1.8; }
+.contact-item strong { display: block; font-size: 14px; color: #8b7a6a; margin-bottom: 5px; letter-spacing: 1px; }
+.contact-item span { font-size: 18px; color: #e8dcc8; font-weight: 600; }
+
+footer { background: #1a1512; color: #6b5a4a; text-align: center; padding: 30px 20px; font-size: 13px; }
+
+@media (max-width: 768px) {
+    .hero h1 { font-size: 32px; letter-spacing: 4px; }
+    .hero .subtitle { font-size: 16px; }
+    nav ul { gap: 20px; }
+    nav a { font-size: 13px; }
+    .pricing-card.featured { transform: scale(1); }
+    .process-step { width: 160px; }
+    .char-card { width: 140px; }
+}
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="#hero">首页</a></li>
+        <li><a href="#about">服务</a></li>
+        <li><a href="#characters">角色</a></li>
+        <li><a href="#gallery">场景</a></li>
+        <li><a href="#process">流程</a></li>
+        <li><a href="#pricing">套餐</a></li>
+        <li><a href="#contact">联系</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <h1>辐射2077：废土之战</h1>
+        <p class="subtitle">定制桌游 · 3D打印 · 全套服务</p>
+        <p class="tagline">基于辐射世界观 + 战锤40K规则框架，32mm战棋比例，5大独特阵营，独创学院隐藏机制。AI生成模型 + 树脂打印 + 手工涂装 + 完整规则，从概念到上桌一站式定制。</p>
+        <a href="#pricing" class="cta">查看定制套餐</a>
+    </div>
+</section>
+
+<section id="about">
+    <h2 class="section-title fade-in">定制服务</h2>
+    <p class="section-subtitle fade-in">从概念设计到上桌游玩，我们提供完整的桌游定制服务。AI生成3D模型，树脂打印精细棋子，手工涂装每一颗，配套完整规则与数据卡。</p>
+    <div class="about-grid">
+        <div class="about-card fade-in">
+            <h3>AI 3D建模</h3>
+            <p>使用Tripo3D/Meshy/Hunyuan3D等AI工具，根据客户需求直接生成3D模型文件。支持角色、场景、武器、道具等各类模型。</p>
+        </div>
+        <div class="about-card fade-in">
+            <h3>树脂3D打印</h3>
+            <p>0.05mm层高，精细还原模型细节。32mm英雄比例，适合战棋涂装和上桌。支持单件定制和批量生产。</p>
+        </div>
+        <div class="about-card fade-in">
+            <h3>手工涂装</h3>
+            <p>三阶段涂装流程：底色+干刷+渍洗。五阵营差异化配色， Citadel漆色体系，专业战棋涂装水准。</p>
+        </div>
+        <div class="about-card fade-in">
+            <h3>规则设计</h3>
+            <p>基于战锤40K框架的简化规则，单桌60-90分钟。独创学院隐藏阵营机制，5大阵营各具特色。</p>
+        </div>
+        <div class="about-card fade-in">
+            <h3>数据卡与骰子</h3>
+            <p>63x88mm标准数据卡，完整属性与特殊规则。五阵营定制滴胶骰子，透明/荧光/金属质感。</p>
+        </div>
+        <div class="about-card fade-in">
+            <h3>场景搭建</h3>
+            <p>废墟建筑、废弃车辆、路障、油桶、装饰杂物。完整的48x48"战场布局方案，3种经典对战模式。</p>
+        </div>
+    </div>
+</section>
+
+<section id="characters">
+    <h2 class="section-title fade-in">五阵营角色</h2>
+    <p class="section-subtitle fade-in">避难所居民、废土掠夺者、超级变种人、钢铁兄弟会、学院（隐藏阵营）。每个阵营拥有独特的视觉风格、特殊规则与战术定位。</p>
+    <div class="char-row">
+        <div class="char-card fade-in">
+            <img src="images/vault.png" alt="避难所居民">
+            <div class="name">避难所居民</div>
+            <div class="role">秩序与洁癖的地下乌托邦</div>
+        </div>
+        <div class="char-card fade-in">
+            <img src="images/raider.png" alt="废土掠夺者">
+            <div class="name">废土掠夺者</div>
+            <div class="role">疯狂的废土暴徒</div>
+        </div>
+        <div class="char-card fade-in">
+            <img src="images/mutant.png" alt="超级变种人">
+            <div class="name">超级变种人</div>
+            <div class="role">肉体变异的原罪</div>
+        </div>
+        <div class="char-card fade-in">
+            <img src="images/bos.png" alt="钢铁兄弟会">
+            <div class="name">钢铁兄弟会</div>
+            <div class="role">钢铁与信仰的冷酷结合</div>
+        </div>
+        <div class="char-card fade-in">
+            <img src="images/institute.png" alt="学院">
+            <div class="name">学院</div>
+            <div class="role">地下高科技幽灵</div>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <h2 class="section-title fade-in">战场与场景</h2>
+    <p class="section-subtitle fade-in">48x48"标准战场，废墟建筑、废弃车辆、路障、资源点，完整的废土世界。</p>
+    <div class="gallery-grid">
+        <div class="gallery-item fade-in">
+            <img src="images/aerial.png" alt="战场鸟瞰">
+            <div class="caption">战场鸟瞰图：48x48" 完整桌面布局</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/ruins.png" alt="废墟争夺">
+            <div class="caption">废墟争夺战：中央建筑，四边对抗</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/escort.png" alt="护送车队">
+            <div class="caption">护送车队：保护卡车穿越废土</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/resources.png" alt="资源战争">
+            <div class="caption">资源战争：多点争夺，战术博弈</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/lineup.png" alt="棋子全阵容">
+            <div class="caption">全部棋子阵容：五阵营18+角色模型</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/overview.png" alt="五阵营角色概念总览">
+            <div class="caption">五阵营角色概念总览</div>
+        </div>
+    </div>
+
+    <h3 style="text-align:center; margin-top:60px; font-size:24px; color:#5c4a3d;">场景零件</h3>
+    <div class="gallery-grid" style="margin-top:30px;">
+        <div class="gallery-item fade-in">
+            <img src="images/building.png" alt="建筑废墟">
+            <div class="caption">建筑废墟：坍塌公寓、加油站、教堂</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/vehicles.png" alt="废弃车辆">
+            <div class="caption">废弃车辆：皮卡、吉普、轿车、摩托</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/barriers.png" alt="路障障碍物">
+            <div class="caption">路障障碍物：沙袋、混凝土、油桶</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/debris.png" alt="装饰杂物">
+            <div class="caption">装饰杂物：路牌、轮胎、武器箱</div>
+        </div>
+    </div>
+
+    <div class="gallery-item" style="margin-top:30px; max-width:900px; margin-left:auto; margin-right:auto;">
+        <img src="images/rocket.png" alt="Red Rocket加油站" style="height:350px; object-fit:cover;">
+        <div class="caption">经典 Red Rocket 加油站</div>
+    </div>
+</section>
+
+<section id="process">
+    <h2 class="section-title fade-in">定制流程</h2>
+    <p class="section-subtitle fade-in">从需求沟通到上桌游玩，7步完成您的专属桌游定制。</p>
+    <div class="process-steps">
+        <div class="process-step fade-in">
+            <div class="num">1</div>
+            <h3>需求沟通</h3>
+            <p>告诉我们您想要的阵营、角色数量、场景规模，以及预算范围。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">2</div>
+            <h3>AI建模</h3>
+            <p>使用AI生成3D模型，确认角色造型、场景布局、武器设计。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">3</div>
+            <h3>3D打印</h3>
+            <p>树脂打印精细模型，0.05mm层高，确保细节还原。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">4</div>
+            <h3>手工涂装</h3>
+            <p>三阶段涂装：底色+干刷+渍洗，五阵营差异化配色。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">5</div>
+            <h3>场景组装</h3>
+            <p>建筑废墟、废弃车辆、路障、杂物，组装完整战场。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">6</div>
+            <h3>规则配套</h3>
+            <p>数据卡、骰子、规则书、说明书，全套游戏配件。</p>
+        </div>
+        <div class="process-step fade-in">
+            <div class="num">7</div>
+            <h3>上桌游玩</h3>
+            <p>快递发货，收到即可开玩。单桌60-90分钟，5分钟上手。</p>
+        </div>
+    </div>
+
+    <div class="gallery-grid" style="margin-top:60px;">
+        <div class="gallery-item fade-in">
+            <img src="images/print.png" alt="打印后处理">
+            <div class="caption">Step 1：打印后处理（拆支撑→清洗→固化）</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/parts.png" alt="分件展示">
+            <div class="caption">Step 2：分件展示（编号组装）</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/assembly.png" alt="组装步骤">
+            <div class="caption">Step 3：组装步骤（粘合→加固）</div>
+        </div>
+        <div class="gallery-item fade-in">
+            <img src="images/paint.png" alt="涂装步骤">
+            <div class="caption">Step 4：涂装步骤（底色→干刷→渍洗→旧化）</div>
+        </div>
+    </div>
+    <div class="gallery-item" style="margin-top:20px; max-width:900px; margin-left:auto; margin-right:auto;">
+        <img src="images/final.png" alt="最终上桌" style="height:350px; object-fit:cover;">
+        <div class="caption">Step 5：最终上桌（完整战场，五阵营对战）</div>
+    </div>
+</section>
+
+<section id="pricing">
+    <h2 class="section-title fade-in">定制套餐</h2>
+    <p class="section-subtitle fade-in">三档套餐满足不同需求，从入门体验到完整收藏。</p>
+    <div class="pricing-grid">
+        <div class="pricing-card fade-in">
+            <div class="pricing-header">
+                <h3>入门体验</h3>
+                <div class="price">299<span>元</span></div>
+            </div>
+            <ul class="pricing-body">
+                <li>1个阵营（5个棋子）</li>
+                <li>基础底座涂装</li>
+                <li>3个场景零件</li>
+                <li>1套数据卡</li>
+                <li>电子版规则书</li>
+                <li>标准骰子6颗</li>
+            </ul>
+            <a href="#contact" class="pricing-cta">立即咨询</a>
+        </div>
+        <div class="pricing-card featured fade-in">
+            <div class="pricing-header">
+                <h3>标准对战</h3>
+                <div class="price">899<span>元</span></div>
+            </div>
+            <ul class="pricing-body">
+                <li>2个阵营（10个棋子）</li>
+                <li>精细涂装+旧化</li>
+                <li>8个场景零件</li>
+                <li>2套数据卡</li>
+                <li>印刷版规则书+说明书</li>
+                <li>定制滴胶骰子12颗</li>
+                <li>48x48"战场布局方案</li>
+                <li>组装涂装教程</li>
+            </ul>
+            <a href="#contact" class="pricing-cta">立即咨询</a>
+        </div>
+        <div class="pricing-card fade-in">
+            <div class="pricing-header">
+                <h3>完整收藏</h3>
+                <div class="price">1999<span>元</span></div>
+            </div>
+            <ul class="pricing-body">
+                <li>5个阵营（25个棋子）</li>
+                <li>展示级涂装（NMM+OSL）</li>
+                <li>20个场景零件</li>
+                <li>5套数据卡+收纳盒</li>
+                <li>精装版规则书+美术设定集</li>
+                <li>全套定制骰子25颗</li>
+                <li>3种战场布局方案</li>
+                <li>专属包装盒</li>
+            </ul>
+            <a href="#contact" class="pricing-cta">立即咨询</a>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2 class="section-title fade-in">联系我们</h2>
+    <p class="section-subtitle fade-in" style="color:#8b7a6a;">有定制需求？随时联系我们，提供详细方案和报价。</p>
+    <div class="contact-info">
+        <div class="contact-item">
+            <strong>微信</strong>
+            <span>charliemonkey1</span>
+            <img src="images/qrcode.png" alt="微信二维码" style="width:120px; height:120px; margin-top:10px; border-radius:4px;">
+        </div>
+        <div class="contact-item">
+            <strong>闲鱼</strong>
+            <span>查理MAX</span>
+        </div>
+    </div>
+    <p style="margin-top:40px; font-size:14px; color:#6b5a4a;">
+        工作时间：周一至周日 10:00-22:00<br>
+        咨询后24小时内回复，定制周期约7-15天
+    </p>
+</section>
+
+<footer>
+    <p>辐射2077：废土之战 · 定制桌游服务</p>
+    <p>基于辐射世界观 + 战锤40K规则框架 · 32mm战棋比例</p>
+    <p style="margin-top:10px; font-size:11px; color:#4a3a2a;">
+        本站展示内容为同人创作，仅供个人收藏与交流，不涉及商业IP授权。
+    </p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => { observer.observe(el); });
+</script>
+
+</body>
+</html>
